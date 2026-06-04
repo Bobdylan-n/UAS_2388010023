@@ -18,6 +18,7 @@ services:
 
   dynamic-web:
     image: dickydermawan12/uas_2388010023:dynamic-latest
+    pull_policy: always
     container_name: dynamic-web
     restart: always
     depends_on:
@@ -27,6 +28,7 @@ services:
 
   static-web:
     image: dickydermawan12/uas_2388010023:static-latest
+    pull_policy: always
     container_name: static-web
     restart: always
     ports:
