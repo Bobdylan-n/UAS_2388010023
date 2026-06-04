@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Derma | Visual Artist — Atelier Estetik</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:opsz,wght@14..32,300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #FCFAF5;
+            color: #1F1C17;
+            font-family: 'Inter', sans-serif;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(circle at 25% 40%, rgba(200, 180, 140, 0.03) 2%, transparent 2.5%);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .artist-container {
+            max-width: 1100px;
+            margin: 3rem auto;
+            padding: 0 1.8rem;
+            position: relative;
+            z-index: 2;
+        }
+        .artist-card {
+            background: rgba(255, 253, 248, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 2.5rem;
+            padding: 2.2rem 2.2rem 2.8rem;
+            box-shadow: 0 20px 45px -18px rgba(0, 0, 0, 0.05);
+            border: 1px solid #F0E9DE;
+        }
+        .artist-split {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            align-items: flex-start;
+        }
+        .photo-column { flex: 0.9; min-width: 220px; }
+        .bio-column { flex: 1.8; min-width: 260px; }
+        .portrait-frame {
+            background: #FFFFFF;
+            border-radius: 28px;
+            padding: 10px;
+            border: 1px solid #E9E0D4;
+            box-shadow: 0 12px 22px -12px rgba(0, 0, 0, 0.06);
+        }
+        .artist-photo {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1 / 1.05;
+            object-fit: cover;
+            border-radius: 20px;
+            display: block;
+            background: #F3EFE4;
+        }
+        .upload-area {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn-upload-art {
+            background: rgba(249, 245, 238, 0.9);
+            border: 1px solid #DFD5C6;
+            border-radius: 80px;
+            padding: 0.55rem 1.6rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #5A4A34;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-upload-art:hover {
+            background: #FFFBF5;
+            border-color: #C7B69B;
+            color: #2F241B;
+        }
+        #fotoUploadInput { display: none; }
+        .photo-hint {
+            font-size: 0.68rem;
+            text-align: center;
+            margin-top: 0.6rem;
+            color: #BCAE98;
+        }
+        .artist-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #2C241A;
+            margin-bottom: 0.5rem;
+        }
+        .artist-role {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+            color: #9B896E;
+            border-left: 2px solid #DBCEBA;
+            padding-left: 12px;
+            margin-bottom: 1.5rem;
+        }
+        .bio-detail {
+            font-size: 0.98rem;
+            line-height: 1.65;
+            color: #3A342C;
+        }
+        .bio-detail p { margin-bottom: 1rem; }
+        .quote-modern {
+            background: #FEFAF2;
+            padding: 1.2rem 1.6rem;
+            border-radius: 24px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #DBC29A;
+            color: #53472F;
+            font-size: 0.95rem;
+        }
+        .quote-modern i { color: #CBB282; margin-right: 8px; }
+        .art-meditation {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #EBE2D6;
+            font-size: 0.85rem;
+            color: #8F8068;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .contact-studio {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .studio-link {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #4F3F2C;
+            border-bottom: 1px solid #E0D3C2;
+        }
+        .studio-link:hover { color: #A48153; }
+        .social-icons a {
+            color: #9B8A70;
+            margin-left: 1.2rem;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .social-icons a:hover { color: #C6A269; }
+        .reset-photo {
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            color: #B2A086;
+            margin-top: 6px;
+            cursor: pointer;
+        }
+        .reset-photo:hover { color: #7A623F; }
+        .drag-tip {
+            font-size: 0.68rem;
+            text-align: center;
+            margin-top: 0.4rem;
+            color: #CABDA9;
+        }
+        @media (max-width: 750px) {
+            .artist-container { margin: 1.5rem auto; padding: 0 1rem; }
+            .artist-card { padding: 1.5rem; }
+            .artist-split { flex-direction: column; gap: 1.5rem; }
+            .photo-column { max-width: 280px; margin: 0 auto; }
+            .artist-name { font-size: 2.5rem; }
+        }
+        .fade-up {
+            animation: fadeUp 0.6s ease-out;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .toast-notif {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #2C241A;
+            color: #FCFAF5;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .toast-notif.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="artist-container fade-up">
+    <div class="artist-card">
+        <div class="artist-split">
+            <div class="photo-column">
+                <div class="portrait-frame" id="portraitFrame">
+                    <!-- FOTO DIAMBIL DARI FOLDER YANG SAMA -->
+                    <img id="artistImage" class="artist-photo" 
+                         src="portrait-derma.jpg" 
+                         alt="Potret Seniman Derma"
+                         onerror="this.src='https://placehold.co/800x850/F3EDE2/B7A583?text=Upload+Foto+ke+Folder&font=playfair'">
+                </div>
+                <div class="upload-area">
+                    <label for="fotoUploadInput" class="btn-upload-art">
+                        <i class="fas fa-cloud-upload-alt"></i> <span>Ganti Foto</span>
+                        <i class="fas fa-camera"></i>
+                    </label>
+                    <input type="file" id="fotoUploadInput" accept="image/jpeg, image/png, image/webp, image/jpg">
+                </div>
+                <div class="photo-hint" id="photoHint">
+                    <i class="fas fa-folder-open"></i> simpan foto sebagai <strong>"portrait-derma.jpg"</strong> di folder yang sama
+                </div>
+                <div class="drag-tip">
+                    <i class="fas fa-info-circle"></i> upload otomatis unduh file — simpan manual ke folder
+                </div>
+                <div class="text-center mt-2">
+                    <button id="downloadPhotoBtn" class="reset-photo" type="button">
+                        <i class="fas fa-download"></i> download foto (untuk disimpan ke folder)
+                    </button>
+                </div>
+            </div>
+
+            <div class="bio-column">
+                <h1 class="artist-name">Derma.</h1>
+                <div class="artist-role">VISUAL ARTIST & STORYTELLER</div>
+                
+                <div class="bio-detail">
+                    <p>Saya melihat dunia bukan sebagai serangkaian objek, melainkan kumpulan fragmen emosi yang menunggu untuk dirangkaikan menjadi rupa. Setiap guratan, warna, dan komposisi yang saya hadirkan adalah upaya untuk memetakan sunyi dan distopia yang sering kita temui di keseharian.</p>
+                    
+                    <div class="quote-modern">
+                        <i class="fas fa-quote-left"></i> Seni adalah cara saya bernapas di dunia yang terlalu berisik.
+                    </div>
+                    
+                    <p>Karya saya mengeksplorasi batas antara melankolia dan harapan. Melalui medium gambar dan tulisan, saya berusaha menangkap esensi dari momen-momen yang sering terabaikan. Setiap foto yang hadir di ruang ini adalah refleksi dari perjalanan visual yang tak pernah usai.</p>
+                    
+                    <p><strong>Karya unggulan:</strong> eksplorasi mixed-media, seri "Sunyi yang Berbisik", serta kolaborasi lintas panggung naratif.</p>
+                </div>
+                
+                <div class="art-meditation">
+                    <div class="contact-studio">
+                        <a href="mailto:derma@atelier.id" class="studio-link">
+                            Hubungi Studio <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="social-icons">
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
+                            <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                    <div><i class="far fa-clock"></i> studio by appointment</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-4" style="font-size: 0.7rem; color: #D9CFBF;">
+        <i class="fas fa-image"></i> letakkan file <strong>portrait-derma.jpg</strong> di folder yang sama dengan index.html
+    </div>
+</div>
+
+<script>
+    (function() {
+        const fileInput = document.getElementById('fotoUploadInput');
+        const artistImg = document.getElementById('artistImage');
+        const downloadBtn = document.getElementById('downloadPhotoBtn');
+        const photoHint = document.getElementById('photoHint');
+        const portraitFrame = document.getElementById('portraitFrame');
+        
+        const DEFAULT_FILENAME = "portrait-derma.jpg";
+        
+        function showToast(message, isError = false) {
+            let toast = document.querySelector('.toast-notif');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.className = 'toast-notif';
+                document.body.appendChild(toast);
+            }
+            toast.innerHTML = isError ? `⚠️ ${message}` : `✨ ${message}`;
+            toast.style.background = isError ? '#8B5E3C' : '#2C241A';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+        
+        // Fungsi untuk download foto (agar user bisa menyimpan ke folder)
+        function downloadPhotoForFolder(imageDataUrl) {
+            const link = document.createElement('a');
+            link.download = DEFAULT_FILENAME;
+            link.href = imageDataUrl;
+            link.click();
+        }
+        
+        // Proses upload: baca file, preview, lalu download agar user bisa simpan ke folder
+        function handleUpload(file) {
+            if (!file) return;
+            
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+            if (!allowedTypes.includes(file.type)) {
+                showToast("Format gambar: JPEG, PNG, atau WEBP", true);
+                return;
+            }
+            
+            const maxSize = 10 * 1024 * 1024;
+            if (file.size > maxSize) {
+                showToast("Ukuran maksimal 10 MB", true);
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgData = e.target.result;
+                // Preview dulu
+                artistImg.src = imgData;
+                
+                // Tawarkan download agar user bisa simpan ke folder
+                showToast("Foto siap! Download dan simpan sebagai " + DEFAULT_FILENAME, false);
+                
+                // Setelah 0.5 detik, tawarkan download
+                setTimeout(() => {
+                    if (confirm(`Simpan foto sebagai "${DEFAULT_FILENAME}" ke folder download Anda?\n\nSetelah itu, pindahkan file ke folder yang sama dengan index.html dan refresh halaman.`)) {
+                        downloadPhotoForFolder(imgData);
+                        photoHint.innerHTML = `<i class="fas fa-check-circle"></i> foto di-download! letakkan di folder sebagai "${DEFAULT_FILENAME}" lalu refresh`;
+                        setTimeout(() => {
+                            photoHint.innerHTML = `<i class="fas fa-folder-open"></i> simpan foto sebagai <strong>"portrait-derma.jpg"</strong> di folder yang sama`;
+                        }, 5000);
+                    }
+                }, 300);
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        // Drag & drop
+        if (portraitFrame) {
+            portraitFrame.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                portraitFrame.style.border = '2px dashed #DBC29A';
+                portraitFrame.style.backgroundColor = '#FEF9EF';
+            });
+            portraitFrame.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                portraitFrame.style.border = '1px solid #E9E0D4';
+                portraitFrame.style.backgroundColor = '#FFFFFF';
+            });
+            portraitFrame.addEventListener('drop', (e) => {
+                e.preventDefault();
+                portraitFrame.style.border = '1px solid #E9E0D4';
+                portraitFrame.style.backgroundColor = '#FFFFFF';
+                const files = e.dataTransfer.files;
+                if (files.length > 0 && files[0].type.startsWith('image/')) {
+                    handleUpload(files[0]);
+                } else if (files.length) {
+                    showToast('Drop file gambar', true);
+                }
+            });
+        }
+        
+        fileInput.addEventListener('change', function(event) {
+            if (event.target.files && event.target.files[0]) {
+                handleUpload(event.target.files[0]);
+            }
+        });
+        
+        // Tombol download manual untuk foto yang sedang ditampilkan
+        downloadBtn.addEventListener('click', function() {
+            const currentSrc = artistImg.src;
+            if (currentSrc && currentSrc.startsWith('data:image')) {
+                downloadPhotoForFolder(currentSrc);
+                showToast("Foto siap download! Simpan sebagai " + DEFAULT_FILENAME, false);
+            } else if (currentSrc && !currentSrc.includes('placehold.co')) {
+                // Jika foto dari server (sudah ada di folder), kita tidak bisa download langsung karena cross-origin?
+                showToast("Foto dari server. Untuk mengganti, upload foto baru.", true);
+            } else {
+                showToast("Upload foto dulu via tombol di atas", true);
+            }
+        });
+        
+        // Pesan petunjuk
+        setTimeout(() => {
+            if (artistImg.src.includes('placehold.co') || artistImg.naturalWidth < 10) {
+                showToast("📁 Belum ada foto. Upload foto, lalu simpan sebagai portrait-derma.jpg ke folder", false);
+            }
+        }, 500);
+    })();
+</script>
+</body>
+</html>

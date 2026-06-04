@@ -1,0 +1,39 @@
+services:
+
+  db:
+    image: mariadb:11
+    container_name: mariadb
+    restart: always
+
+    env_file:
+      - .env
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/mysql
+
+  dynamic-web:
+    build: ./dynamic-web
+    container_name: dynamic-web
+    restart: always
+
+    depends_on:
+      - db
+
+    ports:
+      - "8080:80"
+
+  static-web:
+    build: ./static-web
+    container_name: static-web
+    restart: always
+
+    ports:
+      - "80:80"
+
+volumes:
+  db_data:
