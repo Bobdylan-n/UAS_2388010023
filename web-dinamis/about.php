@@ -115,6 +115,12 @@ include 'components/header.php';
             
             <div class="about-statement text-muted mb-4">
                 <p>
+                    Perkenalkan saya Dicky Dermawan NIM_2388010023 Kelas A
+                </p>
+                <p>
+                    Bisa dikenal juga dengan Derma
+                </p>
+                <p>
                     Selamat datang di ruang sunyi ini. Sastra dan rupa bagi saya bukanlah sekadar hobi, melainkan lembar-lembar catatan tempat ingatan yang rapuh dirawat agar tidak lebur oleh waktu.
                 </p>
                 <p>
