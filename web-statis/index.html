@@ -218,7 +218,6 @@
         <div class="artist-split">
             <div class="photo-column">
                 <div class="portrait-frame" id="portraitFrame">
-                    <!-- FOTO DIAMBIL DARI FOLDER YANG SAMA -->
                     <img id="artistImage" class="artist-photo" 
                          src="portrait-derma.jpg" 
                          alt="Potret Seniman Derma"
@@ -258,12 +257,18 @@
                     <p>Karya saya mengeksplorasi batas antara melankolia dan harapan. Melalui medium gambar dan tulisan, saya berusaha menangkap esensi dari momen-momen yang sering terabaikan. Setiap foto yang hadir di ruang ini adalah refleksi dari perjalanan visual yang tak pernah usai.</p>
                     
                     <p><strong>Karya unggulan:</strong> eksplorasi mixed-media, seri "Sunyi yang Berbisik", serta kolaborasi lintas panggung naratif.</p>
+                    
+                    <!-- IDENTITAS NAMA DAN NIM UNTUK RUBRIK UAS -->
+                    <p style="margin-top: 1.5rem; font-size: 0.9rem; color: #7A623F; font-weight: 500;">
+                        <i class="fas fa-user-circle"></i> Digital Atelier curated by: <strong>Dicky Dermawan</strong> (NIM: 2388010023)
+                    </p>
                 </div>
                 
                 <div class="art-meditation">
                     <div class="contact-studio">
-                        <a href="mailto:derma@atelier.id" class="studio-link">
-                            Hubungi Studio <i class="fas fa-arrow-right"></i>
+                        <!-- LINK DIALIKKAN KE WEB DINAMIS PORT 8080 DAN TEKS BERUBAH MENJADI STUDIO -->
+                        <a href="http://52.221.234.128:8080" class="studio-link" target="_blank">
+                            Studio <i class="fas fa-arrow-right"></i>
                         </a>
                         <div class="social-icons">
                             <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -304,7 +309,6 @@
             setTimeout(() => toast.classList.remove('show'), 3500);
         }
         
-        // Fungsi untuk download foto (agar user bisa menyimpan ke folder)
         function downloadPhotoForFolder(imageDataUrl) {
             const link = document.createElement('a');
             link.download = DEFAULT_FILENAME;
@@ -312,7 +316,6 @@
             link.click();
         }
         
-        // Proses upload: baca file, preview, lalu download agar user bisa simpan ke folder
         function handleUpload(file) {
             if (!file) return;
             
@@ -331,13 +334,10 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 const imgData = e.target.result;
-                // Preview dulu
                 artistImg.src = imgData;
                 
-                // Tawarkan download agar user bisa simpan ke folder
                 showToast("Foto siap! Download dan simpan sebagai " + DEFAULT_FILENAME, false);
                 
-                // Setelah 0.5 detik, tawarkan download
                 setTimeout(() => {
                     if (confirm(`Simpan foto sebagai "${DEFAULT_FILENAME}" ke folder download Anda?\n\nSetelah itu, pindahkan file ke folder yang sama dengan index.html dan refresh halaman.`)) {
                         downloadPhotoForFolder(imgData);
@@ -351,7 +351,6 @@
             reader.readAsDataURL(file);
         }
         
-        // Drag & drop
         if (portraitFrame) {
             portraitFrame.addEventListener('dragover', (e) => {
                 e.preventDefault();
@@ -382,21 +381,18 @@
             }
         });
         
-        // Tombol download manual untuk foto yang sedang ditampilkan
         downloadBtn.addEventListener('click', function() {
             const currentSrc = artistImg.src;
             if (currentSrc && currentSrc.startsWith('data:image')) {
                 downloadPhotoForFolder(currentSrc);
                 showToast("Foto siap download! Simpan sebagai " + DEFAULT_FILENAME, false);
             } else if (currentSrc && !currentSrc.includes('placehold.co')) {
-                // Jika foto dari server (sudah ada di folder), kita tidak bisa download langsung karena cross-origin?
                 showToast("Foto dari server. Untuk mengganti, upload foto baru.", true);
             } else {
                 showToast("Upload foto dulu via tombol di atas", true);
             }
         });
         
-        // Pesan petunjuk
         setTimeout(() => {
             if (artistImg.src.includes('placehold.co') || artistImg.naturalWidth < 10) {
                 showToast("📁 Belum ada foto. Upload foto, lalu simpan sebagai portrait-derma.jpg ke folder", false);
