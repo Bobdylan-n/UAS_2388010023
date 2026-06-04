@@ -1,0 +1,38 @@
+name: Deploy Dynamic Web
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'web-dinamis/**'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./web-dinamis
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/uas_2388010023:dynamic-latest
+
+    - name: Deploy to AWS EC2 via SSH
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.AWS_HOST }}
+        username: ubuntu
+        key: ${{ secrets.AWS_PRIVATE_KEY }}
+        script: |
+          cd ~/UAS_2388010023
+          docker compose pull dynamic-web
+          docker compose up -d dynamic-web
