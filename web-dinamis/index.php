@@ -46,6 +46,8 @@ include 'components/header.php';
     <div class="container">
         <h1 class="hero-title">Ruang Sunyi Visual & Rasa</h1>
         <p class="hero-subtitle">Arsip mandiri peretas pengamatan, baris-baris rupa, dan untaian bait sastra yang tertinggal, yang ditulis dan digores oleh Derma .</p>
+        <p class="hero-subtitle">Atau bisa dikenal juga dengan Dicky Dermawan_2388010023_A</p>
+        <div class="d-flex gap-3 justify-content-center mt-4 pt-2">
         <div class="d-flex gap-3 justify-content-center mt-4 pt-2">
             <a href="art.php" class="btn btn-gallery-primary">Jelajahi Rupa</a>
             <a href="writing.php" class="btn btn-gallery-secondary">Membaca Bait</a>
