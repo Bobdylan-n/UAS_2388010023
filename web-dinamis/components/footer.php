@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row align-items-center py-4">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    <p class="footer-brand font-serif mb-1">The Gallery<span style="color: #8C7853;">.</span></p>
+                    <p class="footer-brand font-serif mb-1">Dicky DErmawan 2388010023<span style="color: #8C7853;">.</span></p>
                     <p class="copyright mb-0">
                         &copy; <?= date('Y'); ?> All rights reserved. Crafted with passion.
                     </p>
